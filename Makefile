@@ -34,10 +34,7 @@ lint: ## Check Python code with isort, black and pylint to identify any problem
 	${PYTHON} -m pylint ${PROJECT_NAME}/* ${TEST_DIR}/*
 
 dist: ## Build wheel for the package
-ifndef VERSION
-	$(error VERSION variable missing. It defines the package version name.)
-endif
-	@echo Creating wheel for $(PROJECT_NAME):$(VERSION)
+	@echo Creating wheel for $(PROJECT_NAME):$(shell cat VERSION)
 	$(PYTHON) setup.py bdist_wheel --universal
 
 upload_dist: ## Upload package to pypi
@@ -63,7 +60,6 @@ docker_dist: build
 	mkdir -p dist
 	@$(DOCKER_RUN) $(OPTIONS) \
 		-v $(shell pwd)/dist:/work/dist \
-		-e VERSION \
 		-t $(DOCKER_IMAGE) \
 		dist
 

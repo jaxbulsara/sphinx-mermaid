@@ -6,7 +6,9 @@ from typing import List
 from setuptools import find_packages, setup
 
 PROJECT_SLUG = "sphinxmermaid"
-VERSION = os.environ["VERSION"]
+
+with open("VERSION", "r", encoding="utf8") as version_file:
+    VERSION = version_file.read()
 
 
 def read_requirements(path: str) -> List[str]:
